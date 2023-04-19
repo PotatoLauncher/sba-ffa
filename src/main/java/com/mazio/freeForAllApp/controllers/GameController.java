@@ -19,9 +19,8 @@ import com.mazio.freeForAllApp.model.Game;
 import com.mazio.freeForAllApp.model.Player;
 import com.mazio.freeForAllApp.service.GameService;
 
-@RestController
-@CrossOrigin(exposedHeaders = {"Access-Control-Allow-Origin","Access-Control-Allow-Credentials"})
-@RequestMapping(value = "/")
+@RestController("/")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class GameController {
 
     @Autowired
