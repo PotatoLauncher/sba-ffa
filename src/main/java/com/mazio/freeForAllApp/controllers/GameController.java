@@ -24,13 +24,13 @@ public class GameController {
     @Autowired
     GameService gameService;
 
-    @GetMapping(value = "/game" , produces = MediaType.APPLICATION_JSON_VALUE ) 
-    public ResponseEntity<Game> getGameData() {
+    @PostMapping(value = "/game" , produces = MediaType.APPLICATION_JSON_VALUE ) 
+    public ResponseEntity<Game> getGameData(@RequestBody String data) {
         return new ResponseEntity<>(gameService.game, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/players" , produces = MediaType.APPLICATION_JSON_VALUE ) 
-    public ResponseEntity<Player[]> getPlayerData() {
+    @PostMapping(value = "/players" , produces = MediaType.APPLICATION_JSON_VALUE ) 
+    public ResponseEntity<Player[]> getPlayerData(@RequestBody String data) {
         return new ResponseEntity<>(gameService.game.players, HttpStatus.OK);
     }
 
