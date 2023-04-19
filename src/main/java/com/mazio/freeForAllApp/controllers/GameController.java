@@ -30,7 +30,7 @@ public class GameController {
     @CrossOrigin
     @GetMapping(value = "/game" , produces = MediaType.APPLICATION_JSON_VALUE ) 
     public ResponseEntity<Game> getGameData() {
-        return ResponseEntity.ok().body(gameService.game);
+        return new ResponseEntity<Game>(gameService.game, HttpStatus.OK);
     }
 
     @CrossOrigin
