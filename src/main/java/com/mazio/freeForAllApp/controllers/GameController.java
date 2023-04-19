@@ -19,21 +19,23 @@ import com.mazio.freeForAllApp.model.Game;
 import com.mazio.freeForAllApp.model.Player;
 import com.mazio.freeForAllApp.service.GameService;
 
-@RestController("/")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false" )
+   @RestController
+   @RequestMapping("/")
 public class GameController {
 
     @Autowired
     GameService gameService;
 
+    @CrossOrigin
     @GetMapping(value = "/game" , produces = MediaType.APPLICATION_JSON_VALUE ) 
-    public ResponseEntity<Game> getGameData() {
-        return new ResponseEntity<Game>(gameService.game, HttpStatus.OK);
+    public Game getGameData() {
+        return gameService.game;
     }
 
     @GetMapping(value = "/players" , produces = MediaType.APPLICATION_JSON_VALUE ) 
-    public ResponseEntity<Player[]> getPlayerData() {
-        return new ResponseEntity<Player[]>(gameService.game.players, HttpStatus.OK);
+    public Player[] getPlayerData() {
+        return gameService.game.players;
     }
 
     @PostMapping(value = "/start" , consumes = "text/plain;charset=UTF-8",  produces = MediaType.APPLICATION_JSON_VALUE ) 
