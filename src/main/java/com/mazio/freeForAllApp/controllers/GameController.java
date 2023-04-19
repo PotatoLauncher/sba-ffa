@@ -20,7 +20,7 @@ import com.mazio.freeForAllApp.model.Player;
 import com.mazio.freeForAllApp.service.GameService;
 
 @RestController("/")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin()
 public class GameController {
 
     @Autowired
