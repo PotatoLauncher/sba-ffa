@@ -65,7 +65,7 @@ public class GameController {
 
     @PostMapping(value = "/vote" , consumes = "text/plain;charset=UTF-8",  produces = MediaType.APPLICATION_JSON_VALUE ) 
     public ResponseEntity<Game> vote(@RequestBody String data, @RequestParam(name = "id") String id, @RequestParam(name = "bet") String bet) throws JsonMappingException, JsonProcessingException {
-        gameService.bet(id,bet);
+        if(!id.equals(bet)) gameService.bet(id,bet);
         return new ResponseEntity<>(gameService.game, HttpStatus.OK);
     }
 

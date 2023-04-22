@@ -33,6 +33,7 @@ public class GameService {
             res[i].playerType =parsedData[i].split(",")[0].split(":")[1].replace("\"", "");
             res[i].playerID   =parsedData[i].split(",")[1].split(":")[1].replace("\"", "");
             res[i].playerName =parsedData[i].split(",")[2].split(":")[1].replace("\"", "");
+            res[i].icon       = Integer.parseInt(parsedData[i].split(",")[3].split(":")[1].replace("\"", "")) ;
         }
         return res;
     }
@@ -61,8 +62,8 @@ public class GameService {
         for(int i=0; i<game.players.length; i++) 
             switch(game.players[i].vote){
                 case GameConstants.BET_NONE:
-                    if(Math.random() > 0.5f) bet(game.players[i].playerID, GameConstants.BET_RED);
-                                        else bet(game.players[i].playerID, GameConstants.BET_BLUE);
+                    if(Math.random() > 0.5f) game.players[i].vote = GameConstants.BET_RED;
+                                        else game.players[i].vote = GameConstants.BET_BLUE;
                     break;
             };
 
@@ -85,6 +86,15 @@ public class GameService {
             if(blue.size()> 0) blue.get((int) Math.floor(Math.random()*blue.size())).statuses.add(GameConstants.STATUS_CROWNED);
             if(red.size()> 0) red.get((int) Math.floor(Math.random()*red.size())).statuses.add(GameConstants.STATUS_CROWNED);
         }
+
+        if(game.gameCard.equals(GameConstants.CARD_RED_NAME) || game.gameCard.equals(GameConstants.CARD_PINK_NAME))
+        for(int i=0; i<game.players.length; i++){
+            while(game.players[i].target.equals("")){
+                int index = (int) Math.floor(Math.random()*(game.players.length));
+                if(index != i) game.players[i].target = game.players[index].playerID;
+            }
+        }
+            
 
         calcMultipliers();
     }
@@ -112,12 +122,12 @@ public class GameService {
             default: break;
         };
         if(game.gameCard.equals(GameConstants.CARD_PURPLE_NAME) && losers.size()!=0){
-            for(int i=0; i<game.players.length; i++) if(game.players[i].statuses.contains(GameConstants.STATUS_REAPED))
+            for(int i=0; i<game.players.length; i++) if(game.players[i].statuses.contains(GameConstants.STATUS_REAPED) && !game.players[i].vote.equals(winner))
                 game.players[i].points -= Math.round(game.players[i].multiplier*2*(100+(25*game.players[i].streak)));   
         }
         
         if(game.gameCard.equals(GameConstants.CARD_BRONZE_NAME) && winners.size()!=0){
-            for(int i=0; i<game.players.length; i++) if(game.players[i].statuses.contains(GameConstants.STATUS_CROWNED))
+            for(int i=0; i<game.players.length; i++) if(game.players[i].statuses.contains(GameConstants.STATUS_CROWNED) && game.players[i].vote.equals(winner))
                 game.players[i].points += Math.round(game.players[i].multiplier*2*(100+(25*game.players[i].streak)));    
         }  
 
@@ -125,6 +135,7 @@ public class GameService {
             bet(game.players[i].playerID, GameConstants.BET_NONE);
             game.players[i].multiplier = 1;
             game.players[i].statuses.clear();
+            game.players[i].target = "";
         }
     }
 
@@ -134,7 +145,15 @@ public class GameService {
     }
 
     public void win(Player player){
-        player.points += Math.round(player.multiplier*(100+(25*player.streak)));
+        if(!game.gameCard.equals(GameConstants.CARD_PINK_NAME))player.points += Math.round(player.multiplier*(100+(25*player.streak)));
+        else{
+            for(int i=0; i<game.players.length; i++) if(player.target.equals(game.players[i].playerID))
+                game.players[i].points += Math.round(player.multiplier*(100+(25*player.streak)));
+        }
+        if(game.gameCard.equals(GameConstants.CARD_RED_NAME)){
+            for(int i=0; i<game.players.length; i++) if(player.target.equals(game.players[i].playerID))
+                game.players[i].points -= Math.round(player.multiplier*(100+(25*player.streak)));
+        }
         player.streak ++;
         if(game.gameCard.equals(GameConstants.CARD_YELLOW_NAME)) player.streak += 2;
     }
@@ -190,6 +209,24 @@ public class GameService {
     //PLAYER ACTIONS
     public void bet(String id, String bet){
         for(int i=0; i<game.players.length; i++) 
-            if(id.equals(game.players[i].playerID)) game.players[i].vote = bet; 
+            for(int j=0; j<game.players.length; j++) 
+            if(bet.equals(game.players[j].playerID)){
+                game.players[i].target = bet;
+                return;
+            }
+        
+        for(int i=0; i<game.players.length; i++) {
+            switch(game.gameCard){
+                case GameConstants.CARD_CYAN_NAME:
+                    if(id.equals(game.players[(i+1+game.players.length)%(game.players.length)].playerID)) game.players[i].vote = bet; 
+                    break;
+                case GameConstants.CARD_TEAL_NAME:
+                    if(id.equals(game.players[(i-1+game.players.length)%(game.players.length)].playerID)) game.players[i].vote = bet; 
+                    break;
+                default:
+                    if(id.equals(game.players[i].playerID)) game.players[i].vote = bet; 
+            }
+        }  
+            
     }
 }

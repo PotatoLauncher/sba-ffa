@@ -21,11 +21,11 @@ public class GameConstants {
 
 
     public static final String CARD_RED_NAME = "Red Theft";
-    public static final String CARD_RED_DESC = "WIP Steal points from a rival when winning.";
+    public static final String CARD_RED_DESC = "Steal points from a rival when winning.";
     static public float CARD_RED_ODDS = 1f;
 
     public static final String CARD_PINK_NAME = "Pink Gift";
-    public static final String CARD_PINK_DESC = "WIP Share your winnings with a friend.";
+    public static final String CARD_PINK_DESC = "Share your winnings with a friend.";
     static public float CARD_PINK_ODDS = 1f;
 
 
@@ -47,25 +47,25 @@ public class GameConstants {
 
 
     public static final String CARD_TEAL_NAME = "Teal Swap";
-    public static final String CARD_TEAL_DESC = "WIP Vote for the player in line.";
+    public static final String CARD_TEAL_DESC = "Vote for the next player in line.";
     static public float CARD_TEAL_ODDS = 1f;
 
     public static final String CARD_CYAN_NAME = "Cyan Swap";
-    public static final String CARD_CYAN_DESC = "WIP Vote for the previous player in line.";
+    public static final String CARD_CYAN_DESC = "Vote for the previous player in line.";
     static public float CARD_CYAN_ODDS = 1f;
 
     public static final String CARD_LIME_NAME = "Lime Paradox";
     public static final String CARD_LIME_DESC = "WIP Swap votes with another player at random!";
-    static public float CARD_LIME_ODDS = 1f;
+    static public float CARD_LIME_ODDS = 0f;
 
 
     public static final String CARD_GRAY_NAME = "Gray Vision";
-    public static final String CARD_GRAY_DESC = "WIP Reveals other players bets.";
+    public static final String CARD_GRAY_DESC = "Reveals other players bets.";
     static public float CARD_GRAY_ODDS = 1f;
 
     public static final String CARD_DARK_NAME = "Dark Blindfold";
     public static final String CARD_DARK_DESC = "WIP Vote completely blind!";
-    static public float CARD_DARK_ODDS = 1f;                  
+    static public float CARD_DARK_ODDS = 0f;                  
 
 
     public static final String CARD_PURPLE_NAME = "Purple Reaper";
@@ -96,11 +96,11 @@ public class GameConstants {
 
     public static final String CARD_GOLDEN_NAME = "Golden Ratio";
     public static final String CARD_GOLDEN_DESC = "A golden opportunity for cash!!!!";
-    static public float CARD_GOLDEN_ODDS = 0.05f;
+    static public float CARD_GOLDEN_ODDS = 0.15f;
 
     public static final String CARD_RAINBOW_NAME = "Rainbow Ratio";
     public static final String CARD_RAINBOW_DESC = "Feeling Lucky ?";
-    static public float CARD_RAINBOW_ODDS = 0.005f;
+    static public float CARD_RAINBOW_ODDS = 0.04f;
 
     public static final ArrayList<String> CARD_NAME_LIST = new ArrayList<>(Arrays.asList(
         CARD_WHITE_NAME,
@@ -161,7 +161,7 @@ public class GameConstants {
         CARD_GOLDEN_ODDS,
         CARD_RAINBOW_ODDS
     ));
-    public static final float CARD_ODDS_TOTAL = 19.055f;
+    public static final float CARD_ODDS_TOTAL = 17.19f;
 
     //ITEMS
     public static final String ITEM_NONE = "NONE";
@@ -172,6 +172,6 @@ public class GameConstants {
     public static final String BET_BLUE = "BLUE";
 
     //STATUSES
-    public static final String STATUS_REAPED = "REAPED";
-    public static final String STATUS_CROWNED = "CROWNED";
+    public static final String STATUS_REAPED = "reaped";
+    public static final String STATUS_CROWNED = "crowned";
 }

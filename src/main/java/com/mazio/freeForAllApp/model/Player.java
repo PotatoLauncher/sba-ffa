@@ -39,6 +39,9 @@ public class Player {
     //Item target
     public String target;
 
+    //Icon ID
+    public int icon;
+
     public Player(){
         playerName = "";
         playerType = "";
@@ -47,8 +50,9 @@ public class Player {
         streak = 0;
         multiplier = 1;
         item = "";
+        icon = 0;
         vote = GameConstants.BET_NONE;
-        target = GameConstants.ITEM_NONE;
+        target = "";
         statuses = new ArrayList<>();
     }
 }
