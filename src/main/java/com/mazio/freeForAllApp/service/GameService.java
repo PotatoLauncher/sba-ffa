@@ -157,9 +157,16 @@ public class GameService {
         player.streak ++;
         if(game.gameCard.equals(GameConstants.CARD_YELLOW_NAME)) player.streak += 2;
     }
+    // R R R R R - 5-> 1  6
+    // R R R R b - 4-> 2  5
+    // R R R b b - 4-> 3  4
+    // R R b b b - 4-> 4  3
+    // R b b b b - 4-> 5  2
+    // b b b b b - 4-> 6  1
 
     public void calcMultipliers(){
         int RED = 0;
+        int BLUE = 0;
         int lowestScore = 999999999;
         for(int i=0; i<game.players.length; i++){
             if(game.players[i].vote == GameConstants.BET_RED) RED++;  
@@ -167,8 +174,8 @@ public class GameService {
         } 
 
         for(int i=0; i<game.players.length; i++) 
-            if(game.players[i].vote.equals(GameConstants.BET_RED)) game.players[i].multiplier = 1-RED+game.players.length;
-                                                              else game.players[i].multiplier = 1+RED;
+            if(game.players[i].vote.equals(GameConstants.BET_RED)) game.players[i].multiplier = game.players.length-RED;
+                                                              else game.players[i].multiplier = 2+RED;
         for(int i=0; i<game.players.length; i++) 
             switch(game.gameCard){
                 case GameConstants.CARD_INDIGO_NAME: 
@@ -184,7 +191,7 @@ public class GameService {
                     if(game.players[i].points == lowestScore) game.players[i].multiplier *= 3; 
                     break;
                 case GameConstants.CARD_ORANGE_NAME:
-                    game.players[i].multiplier = 1 + game.players.length - game.players[i].multiplier;
+                    game.players[i].multiplier = 2 + game.players.length - game.players[i].multiplier;
                     break;
                 default:break;
             }
